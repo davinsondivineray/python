@@ -2,9 +2,10 @@
 
 Python list documentation: https://docs.python.org/3/tutorial/datastructures.html
 """
+from math import ceil
 
 
-def get_rounds(number):
+def get_rounds(num):
     """Create a list containing the current and next two round numbers.
 
     Parameters:
@@ -14,10 +15,10 @@ def get_rounds(number):
         list: The current round number and the two that follow.
     """
 
-    pass
+    return [num, num + 1, num + 2]
 
 
-def concatenate_rounds(rounds_1, rounds_2):
+def concatenate_rounds(r1, r2):
     """Concatenate two lists of round numbers.
 
     Parameters:
@@ -28,10 +29,10 @@ def concatenate_rounds(rounds_1, rounds_2):
         list:  All rounds played.
     """
 
-    pass
+    return r1 + r2
 
 
-def list_contains_round(rounds, number):
+def list_contains_round(rounds, num):
     """Check if the list of rounds contains the specified number.
 
     Parameters:
@@ -42,7 +43,7 @@ def list_contains_round(rounds, number):
         bool: Was the round played?
     """
 
-    pass
+    return num in rounds
 
 
 def card_average(hand):
@@ -55,7 +56,7 @@ def card_average(hand):
         float: The average value of the cards in the hand.
     """
 
-    pass
+    return sum(hand) / len(hand)
 
 
 def approx_average_is_average(hand):
@@ -68,7 +69,10 @@ def approx_average_is_average(hand):
         bool: Does one of the approximate averages equal the `true average`?
     """
 
-    pass
+    average = card_average(hand)
+    aprox1 = (hand[0] + hand[len(hand) - 1]) / 2
+    aprox2 = hand[ceil(len(hand) / 2)]
+    return aprox1 == average or aprox2 == average
 
 
 def average_even_is_average_odd(hand):
@@ -81,7 +85,21 @@ def average_even_is_average_odd(hand):
         bool: Are the even and odd averages equal?
     """
 
-    pass
+    sum_even = 0
+    len_even = 0
+    sum_odd = 0
+    len_odd = 0
+
+    for i in range(0, len(hand), 2):
+        sum_even += hand[i]
+        len_even += 1
+    for i in range(1, len(hand), 2):
+        sum_odd += hand[i]
+        len_odd += 1
+
+    avg_even = sum_even / len_even
+    avg_odd = sum_odd / len_odd
+    return avg_even == avg_odd
 
 
 def maybe_double_last(hand):
@@ -94,4 +112,6 @@ def maybe_double_last(hand):
         list: The hand with Jacks (if present) value doubled.
     """
 
-    pass
+    if hand[len(hand) - 1] == 11:
+        hand[len(hand) - 1] *= 2
+    return hand
